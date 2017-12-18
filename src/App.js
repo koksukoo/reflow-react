@@ -14,6 +14,11 @@ const MenuLink = styled(Link)`
   align-self: center;
   margin-left: auto;
   margin-right: 25px;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #666;
+  }
 `;
 
 class App extends React.PureComponent { // eslint-disable-line

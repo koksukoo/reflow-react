@@ -22,6 +22,10 @@ export const mapProjection = geoNaturalEarth1()
 
 export const mapPath = geoPath().pointRadius(2).projection(mapProjection);
 
+/**
+ * SlugConfig
+ */
+export const slugOptions = { lower: true, remove: /[$*_+~.,()'"!\-:@]/g };
 
 /**
  * INITIALIZE
@@ -29,3 +33,10 @@ export const mapPath = geoPath().pointRadius(2).projection(mapProjection);
 export const INITIALIZE = 'reflow/MapPage/INITIALIZE';
 export const INITIALIZE_SUCCESS = 'reflow/MapPage/INITIALIZE_SUCCESS';
 export const INITIALIZE_ERROR = 'reflow/MapPage/INITIALIZE_ERROR';
+
+/**
+ * SELECT COUNTRY
+ */
+export const SELECT_COUNTRY = 'reflow/MapPage/SELECT_COUNTRY';
+export const SELECT_COUNTRY_SUCCESS = 'reflow/MapPage/SELECT_COUNTRY_SUCCESS';
+export const SELECT_COUNTRY_ERROR = 'reflow/MapPage/SELECT_COUNTRY_ERROR';

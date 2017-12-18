@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import world from 'data/world.json';
@@ -19,17 +20,25 @@ class Map extends React.PureComponent { // eslint-disable-line
   }
 
   render() {
+    const {
+      selectedCountry,
+      initialized,
+      onCountrySelect,
+    } = this.props;
     const geoData = feature(world, world.objects.ne_110m_admin_0_countries)
       .features;
+
     return (
-      <MapWrapper>
-        <StyledMap width={mapConfig.width} height={mapConfig.height}>
+      <MapWrapper loading={!initialized}>
+        <StyledMap>
           <g className="countries">
             {geoData.map((d) =>
               (<Country
                 key={`path-${d.properties.ADM0_A3}`}
                 d={geoPath().projection(this.projection())(d)}
                 className="country"
+                isTarget={d.properties.NAME === selectedCountry}
+                onClick={() => onCountrySelect(d.properties.NAME)}
               />))}
           </g>
         </StyledMap>
@@ -38,6 +47,10 @@ class Map extends React.PureComponent { // eslint-disable-line
   }
 }
 
-Map.propTypes = {};
+Map.propTypes = {
+  selectedCountry: PropTypes.string,
+  initialized: PropTypes.bool,
+  onCountrySelect: PropTypes.func,
+};
 
 export default Map;

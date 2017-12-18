@@ -10,7 +10,8 @@ import Content from 'components/Content';
 import Sidebar from './components/Sidebar';
 import Map from './components/Map';
 
-import { initialize } from './actions';
+import { initialize, selectCountry } from './actions';
+import { isInitialized, selectSelectedCountry } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -19,10 +20,19 @@ class MapPage extends React.PureComponent { // eslint-disable-line
     this.props.init();
   }
   render() {
+    const {
+      initialized,
+      selectedCountry,
+      onCountrySelect,
+    } = this.props;
     return (
       <Content>
         <Sidebar />
-        <Map />
+        <Map
+          initialized={initialized}
+          selectedCountry={selectedCountry}
+          onCountrySelect={onCountrySelect}
+        />
       </Content>
     );
   }
@@ -30,15 +40,22 @@ class MapPage extends React.PureComponent { // eslint-disable-line
 
 MapPage.propTypes = {
   init: PropTypes.func,
+  initialized: PropTypes.bool,
+  selectedCountry: PropTypes.string,
+  onCountrySelect: PropTypes.func,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
-  return {};
+  return {
+    initialized: isInitialized(state),
+    selectedCountry: selectSelectedCountry(state),
+  };
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
     init: () => dispatch(initialize()),
+    onCountrySelect: (country) => dispatch(selectCountry(country)),
   };
 }
 
