@@ -11,7 +11,12 @@ import Sidebar from './components/Sidebar';
 import Map from './components/Map';
 
 import { initialize, selectCountry, changeYear } from './actions';
-import { isInitialized, selectSelectedCountry, selectYears } from './selectors';
+import {
+  isInitialized,
+  selectSelectedCountry,
+  selectYears,
+  selectCurrentTraffic,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -26,16 +31,18 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       onCountrySelect,
       years,
       onChangeYear,
+      traffic,
     } = this.props;
     return (
       <Content>
-        <Sidebar />
+        <Sidebar country={selectedCountry} />
         <Map
           initialized={initialized}
           selectedCountry={selectedCountry}
           onCountrySelect={onCountrySelect}
           years={years}
           changeYear={onChangeYear}
+          traffic={traffic}
         />
       </Content>
     );
@@ -49,6 +56,7 @@ MapPage.propTypes = {
   onCountrySelect: PropTypes.func,
   years: PropTypes.object,
   onChangeYear: PropTypes.func,
+  traffic: PropTypes.array,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
@@ -56,6 +64,7 @@ export function mapStateToProps(state) { // eslint-disable-line
     initialized: isInitialized(state),
     selectedCountry: selectSelectedCountry(state),
     years: selectYears(state),
+    traffic: selectCurrentTraffic(state),
   };
 }
 

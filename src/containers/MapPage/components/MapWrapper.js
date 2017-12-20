@@ -8,6 +8,17 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
   position: relative;
   opacity: ${({ loading }) => loading ? 0.3 : 1};
 
+  .countries {
+  }
+
+  .arc {
+    stroke: #c0c0c0;
+    stroke-width: 2;
+    fill: none;
+    animation: dash 3s linear infinite;
+    pointer-events: none;
+  }
+
   .rc-slider-rail {
     background-color: #cacaca;
     height: 14px;
@@ -29,6 +40,14 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
     width: 24px;
     height: 24px;
     border: 1px solid ${({ theme }) => theme.colors.primary};
+  }
+
+  .rc-slider-dot {
+    display: none;
+  }
+
+  .rc-slider-mark-text {
+    padding-top: 10px;
   }
 `;
 

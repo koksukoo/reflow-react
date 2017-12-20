@@ -13,6 +13,7 @@ const Country = styled.path`
     animation-name: ${({ isTarget }) => isTarget ? 'unset' : 'pulsing-fill'};
     animation-duration: 1.2s;
     animation-iteration-count: infinite;
+    cursor: pointer;
   }
 
   @keyframes pulsing-fill {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CountryTitle from './CountryTitle';
 import StyledSidebar from './StyledSidebar';
 import InfoList from './InfoList';
@@ -23,11 +24,11 @@ const dummyListInfo = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({ country }) {
   return (
     <StyledSidebar>
       <CountryTitle
-        title="Finland"
+        title={country}
         onSubmit={() => console.log('Country changed')} // eslint-disable-line
       />
       <InfoList data={dummyListInfo} />
@@ -35,6 +36,8 @@ function Sidebar() {
   );
 }
 
-Sidebar.propTypes = {};
+Sidebar.propTypes = {
+  country: PropTypes.string,
+};
 
 export default Sidebar;

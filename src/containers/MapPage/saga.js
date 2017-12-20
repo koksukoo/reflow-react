@@ -81,6 +81,7 @@ export function* countrySelectFlow() {
 export function* yearChangeFlow() {
   while (true) {
     const req = yield take(CHANGE_YEAR);
+    localStorage.setItem('reflow/currentYear', req.year);
     yield put(changeYearSuccess(req.year));
   }
 }
