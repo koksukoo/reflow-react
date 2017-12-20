@@ -8,14 +8,13 @@ import {
   INITIALIZE_SUCCESS,
   INITIALIZE_ERROR,
   SELECT_COUNTRY_SUCCESS,
+  CHANGE_YEAR_SUCCESS,
 } from './constants';
 
 const initialState = {
   selectedCountry: null,
   years: null,
-  loadingCountry: false,
   initialized: false,
-  minYear: false,
   countryTraffic: null,
 };
 
@@ -23,7 +22,6 @@ export default function mapPageReducer(state = initialState, action) {
   switch (action.type) {
     case INITIALIZE_SUCCESS:
       return update(state, {
-        loadingCountry: { $set: false },
         years: { $set: action.data.years },
         selectedCountry: { $set: action.data.country },
         countryData: { $set: action.data.countryData },
@@ -31,11 +29,17 @@ export default function mapPageReducer(state = initialState, action) {
       });
     case INITIALIZE_ERROR:
       return update(state, {
-        loadingCountry: { $set: false },
+        initialized: { $set: false },
       });
     case SELECT_COUNTRY_SUCCESS:
       return update(state, {
         selectedCountry: { $set: action.country },
+      });
+    case CHANGE_YEAR_SUCCESS:
+      return update(state, {
+        years: {
+          current: { $set: action.year },
+        },
       });
     default:
       return state;

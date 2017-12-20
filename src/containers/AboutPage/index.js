@@ -10,7 +10,6 @@ const AboutContainer = styled.div`
   margin: 20px auto;
   padding: 20px 30px;
   background-color: #fff;
-
 `;
 
 const StyledAboutTitle = styled.h1`
@@ -61,7 +60,11 @@ function AboutPage() {
           <li>Redux-saga</li>
           <li>Styled-components</li>
           <li>Ramda</li>
+          <li>D3</li>
         </ul>
+        <p>
+          The map data is retrieved from <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">Natural Earth</a>, and refugee statistics are from <a href="http://popstats.unhcr.org/en/overview">UNHCR Population Statistics</a>.
+        </p>
       </AboutContainer>
     </Content>
   );

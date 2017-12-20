@@ -12,3 +12,13 @@ export const selectSelectedCountry = createSelector(
   selectMapDomain,
   get('selectedCountry'),
 );
+
+export const selectCurrentYear = createSelector(
+  selectMapDomain,
+  get('years.current'),
+);
+
+export const selectYears = createSelector(
+  selectMapDomain,
+  get('years'),
+);

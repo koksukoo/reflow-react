@@ -40,3 +40,10 @@ export const INITIALIZE_ERROR = 'reflow/MapPage/INITIALIZE_ERROR';
 export const SELECT_COUNTRY = 'reflow/MapPage/SELECT_COUNTRY';
 export const SELECT_COUNTRY_SUCCESS = 'reflow/MapPage/SELECT_COUNTRY_SUCCESS';
 export const SELECT_COUNTRY_ERROR = 'reflow/MapPage/SELECT_COUNTRY_ERROR';
+
+/**
+ * CHANGE YEAR
+ */
+export const CHANGE_YEAR = 'reflow/MapPage/CHANGE_YEAR';
+export const CHANGE_YEAR_SUCCESS = 'reflow/MapPage/CHANGE_YEAR_SUCCESS';
+export const CHANGE_YEAR_ERROR = 'reflow/MapPage/CHANGE_YEAR_ERROR';
