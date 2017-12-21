@@ -5,6 +5,7 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   position: relative;
   opacity: ${({ loading }) => loading ? 0.3 : 1};
 
@@ -12,11 +13,10 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
   }
 
   .arc {
-    stroke: #c0c0c0;
-    stroke-width: 2;
     fill: none;
     animation: dash 3s linear infinite;
     pointer-events: none;
+    stroke-linecap: round;
   }
 
   .rc-slider-rail {

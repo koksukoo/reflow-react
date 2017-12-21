@@ -41,6 +41,16 @@ function* handleCountryData(currentCountry, y) {
       });
     }
 
+    // Get all-time maximum count of selected country
+    let maxCount = 0;
+    R.keys(countryData).forEach((year) => {
+      const getCount = (obj) => obj.country !== 'Various/Unknown'
+        ? (+obj.countAsylum || 0) + (+obj.countRefugee || 0)
+        : 0;
+      const currentMax = R.reduce(R.max, -Infinity)(R.map(getCount, countryData[year]));
+      maxCount = currentMax > maxCount ? currentMax : maxCount;
+    });
+
     localStorage.setItem('reflow/currentCountry', currentCountry);
     localStorage.setItem('reflow/currentYear', currentYear);
     yield put(initializeSuccess({
@@ -50,6 +60,7 @@ function* handleCountryData(currentCountry, y) {
         max: years[years.length - 1],
         current: currentYear,
       },
+      countryMax: maxCount,
       countryData,
     }));
   } catch (e) {

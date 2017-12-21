@@ -15,7 +15,8 @@ const initialState = {
   selectedCountry: null,
   years: null,
   initialized: false,
-  countryTraffic: null,
+  countryData: null,
+  countryMax: null,
 };
 
 export default function mapPageReducer(state = initialState, action) {
@@ -26,6 +27,7 @@ export default function mapPageReducer(state = initialState, action) {
         selectedCountry: { $set: action.data.country },
         countryData: { $set: action.data.countryData },
         initialized: { $set: true },
+        countryMax: { $set: action.data.countryMax },
       });
     case INITIALIZE_ERROR:
       return update(state, {

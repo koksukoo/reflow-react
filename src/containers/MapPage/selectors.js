@@ -35,3 +35,8 @@ export const selectCurrentTraffic = createSelector(
     return currentYear ? mapDomain.countryData[currentYear] : [];
   }
 );
+
+export const selectCountryMax = createSelector(
+  selectMapDomain,
+  get('countryMax'),
+);

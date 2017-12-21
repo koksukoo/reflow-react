@@ -6,7 +6,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import * as R from 'ramda';
-import { drawArcs } from 'utils/svg';
+import { drawArcs, setLineColor } from 'utils/svg';
 import world from 'data/world.json';
 import { mapConfig } from '../constants';
 import Country from './Country';
@@ -67,6 +67,7 @@ class Map extends React.PureComponent { // eslint-disable-line
       years,
       changeYear,
       traffic,
+      countryMax,
     } = this.props;
 
     const geoData = feature(world, world.objects.ne_110m_admin_0_countries)
@@ -106,22 +107,36 @@ class Map extends React.PureComponent { // eslint-disable-line
                 countRefugee, // eslint-disable-line
               } = countryObj;
 
-              if (!country || country === 'Stateless') return null;
+              if (!country || country === 'Stateless') return true;
 
               const fromCountry = R.find(R.pathEq(['properties', 'NAME'], country))(geoData);
               const toCountry = R.find(R.pathEq(['properties', 'NAME'], selectedCountry))(geoData);
-              if (!fromCountry) return null;
+              const sumCount = (+countAsylum || 0) + (+countRefugee || 0);
+
+              if (!fromCountry || !sumCount) return true;
+
               const coordinates = [
                 fromCountry.centroid,
                 toCountry.centroid,
               ];
-              return (
+
+              return ([
+                <path
+                  key={`o${Date.now() + coordinates[0][0]}`}
+                  d={drawArcs(coordinates)}
+                  className="arc"
+                  stroke="black"
+                  strokeWidth="3"
+                  strokeOpacity="0.2"
+                />,
                 <path
                   key={`${Date.now() + coordinates[0][0]}`}
                   d={drawArcs(coordinates)}
                   className="arc"
-                />
-              );
+                  stroke={setLineColor(sumCount, countryMax)}
+                  strokeWidth="2"
+                />,
+              ]);
             })}
           </g>
         </StyledMap>
@@ -150,6 +165,7 @@ Map.propTypes = {
   years: PropTypes.object,
   changeYear: PropTypes.func,
   traffic: PropTypes.array,
+  countryMax: PropTypes.number,
 };
 
 export default Map;

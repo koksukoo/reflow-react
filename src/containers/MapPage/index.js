@@ -16,6 +16,7 @@ import {
   selectSelectedCountry,
   selectYears,
   selectCurrentTraffic,
+  selectCountryMax,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -32,6 +33,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       years,
       onChangeYear,
       traffic,
+      countryMax,
     } = this.props;
     return (
       <Content>
@@ -43,6 +45,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
           years={years}
           changeYear={onChangeYear}
           traffic={traffic}
+          countryMax={countryMax}
         />
       </Content>
     );
@@ -57,6 +60,7 @@ MapPage.propTypes = {
   years: PropTypes.object,
   onChangeYear: PropTypes.func,
   traffic: PropTypes.array,
+  countryMax: PropTypes.number,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
@@ -65,6 +69,7 @@ export function mapStateToProps(state) { // eslint-disable-line
     selectedCountry: selectSelectedCountry(state),
     years: selectYears(state),
     traffic: selectCurrentTraffic(state),
+    countryMax: selectCountryMax(state),
   };
 }
 
