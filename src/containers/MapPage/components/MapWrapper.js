@@ -14,7 +14,7 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
 
   .arc {
     fill: none;
-    animation: dash 3s linear infinite;
+    animation: dash 20s linear infinite;
     pointer-events: none;
     stroke-linecap: round;
   }
@@ -48,6 +48,19 @@ const MapWrapper = styled.div.attrs({ className: 'map-svg' })`
 
   .rc-slider-mark-text {
     padding-top: 10px;
+  }
+
+  .rc-slider-mark {
+    pointer-events: none;
+  }
+
+  @keyframes dash {
+      from {
+        stroke-dashoffset: 1000;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
   }
 `;
 

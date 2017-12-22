@@ -12,7 +12,7 @@ import {
   COUNTRY_HOVERED,
   SET_HOVERED_COUNTRY,
   SET_HOVERED_COUNTRY_ERROR,
-  SET_TOOLTIP_POSITION,
+  SET_NEXT_YEAR,
 } from './constants';
 
 // Init
@@ -38,4 +38,4 @@ export const countryHovered = (country) => ({ type: COUNTRY_HOVERED, country });
 export const setHoveredCountry = (country, sum = 0) => ({ type: SET_HOVERED_COUNTRY, country, sum });
 export const setHoveredCountryError = (error) => ({ type: SET_HOVERED_COUNTRY_ERROR, error });
 
-export const setTooltipPosition = (top, left) => ({ type: SET_TOOLTIP_POSITION, top, left });
+export const setNextYear = () => ({ type: SET_NEXT_YEAR });

@@ -6,6 +6,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import * as R from 'ramda';
+import { setNextYear } from 'containers/MapPage/actions';
 import { drawArcs, setLineColor } from 'utils/svg';
 import world from 'data/world.json';
 import { mapConfig } from '../constants';
@@ -16,15 +17,18 @@ import SliderWrapper from './SliderWrapper';
 import SliderHandle from './SliderHandle';
 import YearOutput from './YearOutput';
 import ColorHint from './ColorHint';
-
+import PlayButton from './PlayButton';
+import SliderTrack from './SliderTrack';
 
 const SelectedProjection = geoNaturalEarth1;
+let sliderMoveIntervalId;
 
 class Map extends React.PureComponent { // eslint-disable-line
   constructor(props) {
     super(props);
     this.updateDimensions = this.updateDimensions.bind(this);
-    this.state = { svgWidth: null, svgHeight: null };
+    this.togglePlaying = this.togglePlaying.bind(this);
+    this.state = { svgWidth: null, svgHeight: null, isPlaying: false };
   }
 
   componentDidMount() {
@@ -58,6 +62,22 @@ class Map extends React.PureComponent { // eslint-disable-line
     SelectedProjection()
       .scale([(newWidth - 10) / mapConfig.scalars.scale])
       .translate([newWidth / mapConfig.scalars.width, (newHeight - 30) / mapConfig.scalars.height]);
+  }
+
+  togglePlaying() {
+    this.setState({
+      isPlaying: !this.state.isPlaying,
+    });
+    setTimeout(() => {
+      if (this.state.isPlaying) {
+        sliderMoveIntervalId = setInterval(() => {
+          // change year every 5s
+          this.props.dispatch(setNextYear());
+        }, 3000);
+      } else {
+        clearInterval(sliderMoveIntervalId);
+      }
+    }, 10);
   }
 
   render() {
@@ -143,6 +163,7 @@ class Map extends React.PureComponent { // eslint-disable-line
                   className="arc"
                   stroke={setLineColor(sumCount, countryMax)}
                   strokeWidth="2"
+                  strokeDasharray={this.state.isPlaying ? 10 : 0}
                 />,
               ]);
             })}
@@ -150,16 +171,20 @@ class Map extends React.PureComponent { // eslint-disable-line
         </StyledMap>
         {!!initialized &&
         <SliderWrapper>
-          <ColorHint />
-          <Slider
-            min={+years.min}
-            max={+years.max}
-            marks={sliderMarks}
-            defaultValue={+years.current}
-            handle={SliderHandle}
-            onChange={changeYear}
-          />
-          <YearOutput>{years.current}</YearOutput>
+          <PlayButton togglePlaying={this.togglePlaying} isPlaying={this.state.isPlaying} />
+          <SliderTrack>
+            <ColorHint countryMax={countryMax} />
+            <Slider
+              min={+years.min}
+              max={+years.max}
+              marks={sliderMarks}
+              defaultValue={+years.current}
+              value={+years.current}
+              handle={SliderHandle}
+              onChange={changeYear}
+            />
+            <YearOutput>{years.current}</YearOutput>
+          </SliderTrack>
         </SliderWrapper>
         }
       </MapWrapper>
@@ -177,6 +202,7 @@ Map.propTypes = {
   countryMax: PropTypes.number,
   onCountryHovered: PropTypes.func,
   onSetTooltipPosition: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default Map;

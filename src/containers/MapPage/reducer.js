@@ -11,7 +11,6 @@ import {
   CHANGE_YEAR_SUCCESS,
   SET_TARGET_COUNTRY_DATA,
   SET_HOVERED_COUNTRY,
-  SET_TOOLTIP_POSITION,
 } from './constants';
 
 const initialState = {
@@ -65,13 +64,6 @@ export default function mapPageReducer(state = initialState, action) {
         hoveredCountry: {
           name: { $set: action.country },
           amount: { $set: action.sum },
-        },
-      });
-    case SET_TOOLTIP_POSITION:
-      return update(state, {
-        hoveredCountry: {
-          top: { $set: action.top },
-          left: { $set: action.left },
         },
       });
     default:

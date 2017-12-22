@@ -54,11 +54,11 @@ export const CHANGE_YEAR = 'reflow/MapPage/CHANGE_YEAR';
 export const CHANGE_YEAR_SUCCESS = 'reflow/MapPage/CHANGE_YEAR_SUCCESS';
 export const CHANGE_YEAR_ERROR = 'reflow/MapPage/CHANGE_YEAR_ERROR';
 
+export const SET_NEXT_YEAR = 'reflow/MapPage/SET_NEXT_YEAR';
+
 /**
  * HOVERED COUNTRY
  */
 export const COUNTRY_HOVERED = 'reflow/MapPage/COUNTRY_HOVERED';
 export const SET_HOVERED_COUNTRY = 'reflow/MapPage/SET_HOVERED_COUNTRY';
 export const SET_HOVERED_COUNTRY_ERROR = 'reflow/MapPage/SET_HOVERED_COUNTRY_ERROR';
-
-export const SET_TOOLTIP_POSITION = 'reflow/MapPage/SET_TOOLTIP_POSITION';

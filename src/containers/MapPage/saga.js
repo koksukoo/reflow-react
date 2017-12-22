@@ -18,11 +18,13 @@ import {
   CHANGE_YEAR,
   COUNTRY_HOVERED,
   slugOptions,
+  SET_NEXT_YEAR,
 } from './constants';
 import {
   selectSelectedCountry,
   selectSelectedCountryCode,
   selectCurrentYear,
+  selectYears,
   selectCurrentTraffic,
 } from './selectors';
 
@@ -152,6 +154,17 @@ export function* yearChangeFlow() {
   }
 }
 
+export function* setNextYearFlow() {
+  while (true) {
+    yield take(SET_NEXT_YEAR);
+    const years = yield select(selectYears);
+
+    if (years && (+(years.max) >= (+(years.current) + 1))) {
+      yield put(changeYearSuccess(+(years.current) + 1));
+    }
+  }
+}
+
 export function* countryHoveredFlow() {
   while (true) {
     const req = yield take(COUNTRY_HOVERED);
@@ -178,5 +191,6 @@ export default function* defaultSaga() {
   yield takeLatest(INITIALIZE, initFlow);
   yield fork(countrySelectFlow);
   yield fork(yearChangeFlow);
+  yield fork(setNextYearFlow);
   yield fork(countryHoveredFlow);
 }

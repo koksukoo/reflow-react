@@ -54,6 +54,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
 
   render() {
     const {
+      dispatch,
       initialized,
       selectedCountry,
       onCountrySelect,
@@ -70,6 +71,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       <Content>
         <Sidebar country={selectedCountry} data={currentCountryDetails} />
         <Map
+          dispatch={dispatch}
           initialized={initialized}
           selectedCountry={selectedCountry}
           onCountrySelect={onCountrySelect}
@@ -91,6 +93,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
 }
 
 MapPage.propTypes = {
+  dispatch: PropTypes.func,
   init: PropTypes.func,
   initialized: PropTypes.bool,
   selectedCountry: PropTypes.string,
@@ -118,6 +121,7 @@ export function mapStateToProps(state) { // eslint-disable-line
 
 export function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     init: () => dispatch(initialize()),
     onCountrySelect: (country, countryCode) => dispatch(selectCountry(country, countryCode)),
     onChangeYear: (year) => dispatch(changeYear(year)),
