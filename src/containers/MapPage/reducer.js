@@ -9,14 +9,25 @@ import {
   INITIALIZE_ERROR,
   SELECT_COUNTRY_SUCCESS,
   CHANGE_YEAR_SUCCESS,
+  SET_TARGET_COUNTRY_DATA,
+  SET_HOVERED_COUNTRY,
+  SET_TOOLTIP_POSITION,
 } from './constants';
 
 const initialState = {
   selectedCountry: null,
+  selectedCountryCode: null,
+  hoveredCountry: {},
   years: null,
   initialized: false,
   countryData: null,
   countryMax: null,
+  targetCountryDetails: {
+    gdp: null,
+    gdpCapita: null,
+    le: null,
+    population: null,
+  },
 };
 
 export default function mapPageReducer(state = initialState, action) {
@@ -28,6 +39,7 @@ export default function mapPageReducer(state = initialState, action) {
         countryData: { $set: action.data.countryData },
         initialized: { $set: true },
         countryMax: { $set: action.data.countryMax },
+        selectedCountryCode: { $set: action.data.countryCode },
       });
     case INITIALIZE_ERROR:
       return update(state, {
@@ -36,11 +48,30 @@ export default function mapPageReducer(state = initialState, action) {
     case SELECT_COUNTRY_SUCCESS:
       return update(state, {
         selectedCountry: { $set: action.country },
+        selectedCountryCode: { $set: action.countryCode },
       });
     case CHANGE_YEAR_SUCCESS:
       return update(state, {
         years: {
           current: { $set: action.year },
+        },
+      });
+    case SET_TARGET_COUNTRY_DATA:
+      return update(state, {
+        targetCountryDetails: { $set: action.data },
+      });
+    case SET_HOVERED_COUNTRY:
+      return update(state, {
+        hoveredCountry: {
+          name: { $set: action.country },
+          amount: { $set: action.sum },
+        },
+      });
+    case SET_TOOLTIP_POSITION:
+      return update(state, {
+        hoveredCountry: {
+          top: { $set: action.top },
+          left: { $set: action.left },
         },
       });
     default:

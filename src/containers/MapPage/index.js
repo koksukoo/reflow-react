@@ -9,22 +9,49 @@ import injectSaga from 'utils/injectSaga';
 import Content from 'components/Content';
 import Sidebar from './components/Sidebar';
 import Map from './components/Map';
+import CountryTooltip from './components/CountryTooltip';
 
-import { initialize, selectCountry, changeYear } from './actions';
+import {
+  initialize,
+  selectCountry,
+  changeYear,
+  countryHovered,
+} from './actions';
 import {
   isInitialized,
   selectSelectedCountry,
   selectYears,
   selectCurrentTraffic,
   selectCountryMax,
+  selectCurrentCountryDetails,
+  selectHoveredCountry,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 class MapPage extends React.PureComponent { // eslint-disable-line
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tooltipTop: 0,
+      tooltipLeft: 0,
+    };
+
+    this.setTooltipPosition = this.setTooltipPosition.bind(this);
+  }
+
   componentWillMount() {
     this.props.init();
   }
+
+  setTooltipPosition(top, left) {
+    this.setState({
+      tooltipTop: top,
+      tooltipLeft: left,
+    });
+  }
+
   render() {
     const {
       initialized,
@@ -34,10 +61,14 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       onChangeYear,
       traffic,
       countryMax,
+      currentCountryDetails,
+      hoveredCountry,
+      onCountryHovered,
     } = this.props;
+
     return (
       <Content>
-        <Sidebar country={selectedCountry} />
+        <Sidebar country={selectedCountry} data={currentCountryDetails} />
         <Map
           initialized={initialized}
           selectedCountry={selectedCountry}
@@ -46,7 +77,14 @@ class MapPage extends React.PureComponent { // eslint-disable-line
           changeYear={onChangeYear}
           traffic={traffic}
           countryMax={countryMax}
+          onCountryHovered={onCountryHovered}
+          onSetTooltipPosition={this.setTooltipPosition}
         />
+        {!!hoveredCountry && !!hoveredCountry.name &&
+          <CountryTooltip top={this.state.tooltipTop} left={this.state.tooltipLeft}>
+            {hoveredCountry.name} ({hoveredCountry.amount})
+          </CountryTooltip>
+        }
       </Content>
     );
   }
@@ -61,6 +99,9 @@ MapPage.propTypes = {
   onChangeYear: PropTypes.func,
   traffic: PropTypes.array,
   countryMax: PropTypes.number,
+  currentCountryDetails: PropTypes.object,
+  hoveredCountry: PropTypes.object,
+  onCountryHovered: PropTypes.func,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
@@ -70,14 +111,17 @@ export function mapStateToProps(state) { // eslint-disable-line
     years: selectYears(state),
     traffic: selectCurrentTraffic(state),
     countryMax: selectCountryMax(state),
+    currentCountryDetails: selectCurrentCountryDetails(state),
+    hoveredCountry: selectHoveredCountry(state),
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
     init: () => dispatch(initialize()),
-    onCountrySelect: (country) => dispatch(selectCountry(country)),
+    onCountrySelect: (country, countryCode) => dispatch(selectCountry(country, countryCode)),
     onChangeYear: (year) => dispatch(changeYear(year)),
+    onCountryHovered: (country) => dispatch(countryHovered(country)),
   };
 }
 

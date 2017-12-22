@@ -4,40 +4,21 @@ import CountryTitle from './CountryTitle';
 import StyledSidebar from './StyledSidebar';
 import InfoList from './InfoList';
 
-
-const dummyListInfo = [
-  {
-    title: 'Population',
-    value: '5,4 mil.',
-  },
-  {
-    title: 'GDP',
-    value: '235,8 mil.',
-  },
-  {
-    title: 'GDP (Capita)',
-    value: '43,1k mil.',
-  },
-  {
-    title: 'Life expentancy',
-    value: '81.4',
-  },
-];
-
-function Sidebar({ country }) {
+function Sidebar({ country, data }) {
   return (
     <StyledSidebar>
       <CountryTitle
         title={country}
         onSubmit={() => console.log('Country changed')} // eslint-disable-line
       />
-      <InfoList data={dummyListInfo} />
+      <InfoList data={data} />
     </StyledSidebar>
   );
 }
 
 Sidebar.propTypes = {
   country: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export default Sidebar;

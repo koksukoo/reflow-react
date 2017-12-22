@@ -15,6 +15,7 @@ import StyledMap from './StyledMap';
 import SliderWrapper from './SliderWrapper';
 import SliderHandle from './SliderHandle';
 import YearOutput from './YearOutput';
+import ColorHint from './ColorHint';
 
 
 const SelectedProjection = geoNaturalEarth1;
@@ -68,6 +69,8 @@ class Map extends React.PureComponent { // eslint-disable-line
       changeYear,
       traffic,
       countryMax,
+      onCountryHovered,
+      onSetTooltipPosition,
     } = this.props;
 
     const geoData = feature(world, world.objects.ne_110m_admin_0_countries)
@@ -96,15 +99,20 @@ class Map extends React.PureComponent { // eslint-disable-line
                 d={geoPath().projection(this.projection(this.state.svgWidth, this.state.svgHeight))(d)}
                 className="country"
                 isTarget={d.properties.NAME === selectedCountry}
-                onClick={() => onCountrySelect(d.properties.NAME)}
+                onClick={() => onCountrySelect(d.properties.NAME, d.properties.ADM0_A3)}
+                onMouseOver={() => onCountryHovered(d.properties.NAME)}
+                onFocus={() => onCountryHovered(d.properties.NAME)}
+                onMouseOut={() => onCountryHovered(null)}
+                onBlur={() => onCountryHovered(null)}
+                onMouseMove={(event) => onSetTooltipPosition(event.pageY - 10, event.pageX + 10)}
               />))}
           </g>
           <g className="traffic" ref={(n) => { this.traffic = n; }} >
             {traffic && traffic.map((countryObj) => {
               const {
                 country,
-                countAsylum, // eslint-disable-line
-                countRefugee, // eslint-disable-line
+                countAsylum,
+                countRefugee,
               } = countryObj;
 
               if (!country || country === 'Stateless') return true;
@@ -142,6 +150,7 @@ class Map extends React.PureComponent { // eslint-disable-line
         </StyledMap>
         {!!initialized &&
         <SliderWrapper>
+          <ColorHint />
           <Slider
             min={+years.min}
             max={+years.max}
@@ -166,6 +175,8 @@ Map.propTypes = {
   changeYear: PropTypes.func,
   traffic: PropTypes.array,
   countryMax: PropTypes.number,
+  onCountryHovered: PropTypes.func,
+  onSetTooltipPosition: PropTypes.func,
 };
 
 export default Map;

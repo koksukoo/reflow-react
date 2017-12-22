@@ -42,8 +42,23 @@ export const SELECT_COUNTRY_SUCCESS = 'reflow/MapPage/SELECT_COUNTRY_SUCCESS';
 export const SELECT_COUNTRY_ERROR = 'reflow/MapPage/SELECT_COUNTRY_ERROR';
 
 /**
+ * TARGET COUNTRY DATA
+ */
+export const SET_TARGET_COUNTRY_DATA = 'reflow/MapPage/SET_TARGET_COUNTRY_DATA';
+export const SET_TARGET_COUNTRY_DATA_ERROR = 'reflow/MapPage/SET_TARGET_COUNTRY_DATA_ERROR';
+
+/**
  * CHANGE YEAR
  */
 export const CHANGE_YEAR = 'reflow/MapPage/CHANGE_YEAR';
 export const CHANGE_YEAR_SUCCESS = 'reflow/MapPage/CHANGE_YEAR_SUCCESS';
 export const CHANGE_YEAR_ERROR = 'reflow/MapPage/CHANGE_YEAR_ERROR';
+
+/**
+ * HOVERED COUNTRY
+ */
+export const COUNTRY_HOVERED = 'reflow/MapPage/COUNTRY_HOVERED';
+export const SET_HOVERED_COUNTRY = 'reflow/MapPage/SET_HOVERED_COUNTRY';
+export const SET_HOVERED_COUNTRY_ERROR = 'reflow/MapPage/SET_HOVERED_COUNTRY_ERROR';
+
+export const SET_TOOLTIP_POSITION = 'reflow/MapPage/SET_TOOLTIP_POSITION';

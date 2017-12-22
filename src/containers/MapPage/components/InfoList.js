@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { parseValue, scaleToMillions } from 'utils/data';
 
 const StyledInfoList = styled.ul`
   list-style: none;
@@ -17,13 +18,16 @@ const StyledInfoList = styled.ul`
 function InfoList({ data }) {
   return (
     <StyledInfoList>
-      {data.map(({ title, value }) => <li key={title}>{ title }: { value }</li>)}
+      <li>Population: { scaleToMillions(data.population) }</li>
+      <li>GDP: ${ scaleToMillions(parseValue(data.gdp)) }</li>
+      <li>GDP per Capita: ${ parseValue(data.gdpCapita, { round: true }) }</li>
+      <li>Life expentancy: { data.le ? parseValue(data.le, { decimals: 2 }) : 'unknown' } years</li>
     </StyledInfoList>
   );
 }
 
 InfoList.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
 };
 
 export default InfoList;
