@@ -3,6 +3,7 @@ import slugify from 'slugify';
 import * as R from 'ramda';
 import { change as formChange } from 'redux-form';
 import api from 'utils/api';
+import { countryCodes } from 'utils/constants';
 import {
   initializeError,
   initializeSuccess,
@@ -65,8 +66,10 @@ function* targetCountryDataFlow() {
 /**
  * Puts current country and year to correct place in state
  */
-function* handleCountryData(currentCountry, y, code) {
+function* handleCountryData(currentCountry, y, code = null) {
   let currentYear = y;
+  const selectedCode = code || countryCodes[currentCountry];
+
   try {
     const storeCountry = yield select(selectSelectedCountry);
     const storeYear = yield select(selectCurrentYear);
@@ -104,11 +107,11 @@ function* handleCountryData(currentCountry, y, code) {
 
     localStorage.setItem('reflow/currentCountry', currentCountry);
     localStorage.setItem('reflow/currentYear', currentYear);
-    localStorage.setItem('reflow/currentCountryCode', code);
+    localStorage.setItem('reflow/currentCountryCode', selectedCode);
 
     yield put(initializeSuccess({
       country: currentCountry,
-      countryCode: code,
+      countryCode: selectedCode,
       years: {
         min: years[0],
         max: years[years.length - 1],
