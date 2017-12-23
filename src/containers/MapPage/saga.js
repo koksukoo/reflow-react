@@ -1,6 +1,7 @@
 import { takeLatest, take, fork, call, put, select } from 'redux-saga/effects';
 import slugify from 'slugify';
 import * as R from 'ramda';
+import { change as formChange } from 'redux-form';
 import api from 'utils/api';
 import {
   initializeError,
@@ -143,6 +144,7 @@ export function* countrySelectFlow() {
 
     yield fork(handleCountryData, req.country, currentYear, req.countryCode);
     yield put(selectCountrySuccess(req.country, req.countryCode));
+    yield put(formChange('search', 'country', req.country));
   }
 }
 

@@ -13,6 +13,7 @@ import {
   SET_HOVERED_COUNTRY,
   SET_HOVERED_COUNTRY_ERROR,
   SET_NEXT_YEAR,
+  SET_SEARCH_BAR_COUNTRY,
 } from './constants';
 
 // Init
@@ -23,6 +24,7 @@ export const initializeError = (error) => ({ type: INITIALIZE_ERROR, error });
 // select a country
 export const selectCountry = (country, countryCode) => ({ type: SELECT_COUNTRY, country, countryCode });
 export const selectCountrySuccess = (country, countryCode) => ({ type: SELECT_COUNTRY_SUCCESS, country, countryCode });
+export const setSearchbarCountry = (country) => ({ type: SET_SEARCH_BAR_COUNTRY, country });
 
 // target counry data
 export const setTargetCountryData = (data) => ({ type: SET_TARGET_COUNTRY_DATA, data });

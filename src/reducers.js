@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import update from 'immutability-helper';
 
@@ -28,6 +29,7 @@ function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
+    form: formReducer,
     route: routeReducer,
     ...injectedReducers,
   });

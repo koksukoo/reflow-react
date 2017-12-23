@@ -41,6 +41,8 @@ export const SELECT_COUNTRY = 'reflow/MapPage/SELECT_COUNTRY';
 export const SELECT_COUNTRY_SUCCESS = 'reflow/MapPage/SELECT_COUNTRY_SUCCESS';
 export const SELECT_COUNTRY_ERROR = 'reflow/MapPage/SELECT_COUNTRY_ERROR';
 
+export const SET_SEARCH_BAR_COUNTRY = 'reflow/MapPage/SET_SEARCH_BAR_COUNTRY';
+
 /**
  * TARGET COUNTRY DATA
  */
