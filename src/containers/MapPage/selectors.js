@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
+import { formValueSelector } from 'redux-form';
+import * as R from 'ramda';
 import { get } from 'utils/lens';
+import { countryNames } from 'utils/constants';
 
 const selectMapDomain = (state) => state.map;
 
@@ -66,3 +69,11 @@ export const selectHoveredCountry = createSelector(
   selectMapDomain,
   get('hoveredCountry'),
 );
+
+const searchFormSelector = formValueSelector('search');
+
+export const selectFilteredList = (state) => {
+  const searchValue = searchFormSelector(state, 'country');
+  const filteredResults = R.filter((n) => !n.search(new RegExp(searchValue, 'ig')), countryNames);
+  return filteredResults;
+};

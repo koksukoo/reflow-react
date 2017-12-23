@@ -25,6 +25,7 @@ import {
   selectCountryMax,
   selectCurrentCountryDetails,
   selectHoveredCountry,
+  selectFilteredList,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -65,11 +66,12 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       currentCountryDetails,
       hoveredCountry,
       onCountryHovered,
+      filteredList,
     } = this.props;
 
     return (
       <Content>
-        <Sidebar country={selectedCountry} data={currentCountryDetails} />
+        <Sidebar country={selectedCountry} data={currentCountryDetails} filteredList={filteredList} onCountrySelect={onCountrySelect} />
         <Map
           dispatch={dispatch}
           initialized={initialized}
@@ -105,6 +107,7 @@ MapPage.propTypes = {
   currentCountryDetails: PropTypes.object,
   hoveredCountry: PropTypes.object,
   onCountryHovered: PropTypes.func,
+  filteredList: PropTypes.array,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
@@ -116,6 +119,7 @@ export function mapStateToProps(state) { // eslint-disable-line
     countryMax: selectCountryMax(state),
     currentCountryDetails: selectCurrentCountryDetails(state),
     hoveredCountry: selectHoveredCountry(state),
+    filteredList: selectFilteredList(state),
   };
 }
 
