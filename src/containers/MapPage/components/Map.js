@@ -36,6 +36,10 @@ class Map extends React.PureComponent { // eslint-disable-line
     this.updateDimensions();
   }
 
+  componentWillUnmount() {
+    clearInterval(sliderMoveIntervalId);
+  }
+
   projection(argWidth = mapConfig.width, argHeight = mapConfig.height) {
     const width = argWidth || mapConfig.width;
     const height = argHeight || mapConfig.height;

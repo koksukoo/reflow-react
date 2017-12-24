@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import FaPlay from 'react-icons/lib/fa/play-circle';
 import FaPause from 'react-icons/lib/fa/pause-circle';
+import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
 
 
 const Wrapper = styled.div`
@@ -25,13 +26,25 @@ const Wrapper = styled.div`
     stroke: ${({ theme }) => theme.colors.grayLighter};
     stroke-width: 2;
   }
+
+  .spinner {
+    position: absolute;
+    font-size: 44px;
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 function PlayButton({ togglePlaying, isPlaying }) {
   return (
     <Wrapper onClick={togglePlaying} isPlaying={isPlaying}>
       {isPlaying
-        ? <FaPause />
+        ? [<FaCircleONotch className="spinner" key="1" />, <FaPause key="2" />]
         : <FaPlay />
       }
     </Wrapper>

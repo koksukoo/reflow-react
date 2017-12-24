@@ -137,6 +137,7 @@ export const countryNames = [
   'Chile',
   'China',
   "Côte d'Ivoire",
+  "Cote d'Ivoire",
   'Cameroon',
   'Dem. Rep. Congo',
   'Congo',

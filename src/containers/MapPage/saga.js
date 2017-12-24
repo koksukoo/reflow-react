@@ -83,6 +83,8 @@ function* handleCountryData(currentCountry, y, code = null) {
     const years = R.keys(countryData);
     [currentYear] = !currentYear ? years : [currentYear];
 
+    // set current year to first year where fromCountry other than
+    // various/unknown
     if (currentYear === years[0]) {
       years.some((year) => {
         const cursor = R.find(R.propSatisfies((c) =>
@@ -154,7 +156,7 @@ export function* countrySelectFlow() {
 export function* yearChangeFlow() {
   while (true) {
     const req = yield take(CHANGE_YEAR);
-    localStorage.setItem('reflow/currentYear', req.year);
+    localStorage.setItem('reflow/currentYear', Math.floor(req.year));
     yield put(changeYearSuccess(req.year));
   }
 }

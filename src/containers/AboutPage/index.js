@@ -10,6 +10,15 @@ const AboutContainer = styled.div`
   margin: 20px auto;
   padding: 20px 30px;
   background-color: #fff;
+  overflow: auto;
+
+  .contact {
+    font-style: italic;
+    margin-top: 50px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 5px solid ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 const StyledAboutTitle = styled.h1`
@@ -38,36 +47,68 @@ const StyledBackLink = styled(Link)`
   }
 `;
 
-function AboutPage() {
-  return (
-    <Content>
-      <AboutContainer>
-        <StyledAboutTitle>
-          About
-          <StyledBackLink to="/"><FaBack /> Go Back</StyledBackLink>
-        </StyledAboutTitle>
-        <p>
-          This is a react fork of <a href="https://github.com/kajumito/reflow">this github-project</a>.
-        </p>
-        <p>
-          Original authors of that project are Mikko Kokkoniemi, Kasper Tontti, Hentter Eloranta and Tapio Mylläri. This fork is written by Mikko kokkoniemi.
-        </p>
-        <p>
-          The most important technologies / libraries used in this project are:
-        </p>
-        <ul>
-          <li>React</li>
-          <li>Redux-saga</li>
-          <li>Styled-components</li>
-          <li>Ramda</li>
-          <li>D3</li>
-        </ul>
-        <p>
-          The map data is retrieved from <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">Natural Earth</a>, and refugee statistics are from <a href="http://popstats.unhcr.org/en/overview">UNHCR Population Statistics</a>.
-        </p>
-      </AboutContainer>
-    </Content>
-  );
+class AboutPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = { email: null };
+  }
+
+  componentDidMount() {
+    if (!this.content) return;
+    setTimeout(() => {
+      this.setState({ email: 'm' });
+      'ikkokokkoniemi@gmail.com'.split('').forEach((c, i) => {
+        setTimeout(() => this.setState({
+          email: this.state.email + c,
+        }), 100 * (i + 1));
+      });
+    }, 1);
+  }
+
+  render() {
+    return (
+      <Content ref={(n) => { this.content = n; }}>
+        <AboutContainer>
+          <StyledAboutTitle>
+            About
+            <StyledBackLink to="/"><FaBack /> Go Back</StyledBackLink>
+          </StyledAboutTitle>
+          <p>
+            This is a react fork of <a href="https://github.com/kajumito/reflow">&quot;reflow&quot;-github-project</a>.
+          </p>
+          <p>
+            The Original authors of that project are Mikko Kokkoniemi, Kasper Tontti, Hentter Eloranta and Tapio Mylläri. This fork is written by Mikko kokkoniemi.
+          </p>
+          <p>
+            The most important technologies and libraries used in this project are:
+          </p>
+          <ul>
+            <li>React</li>
+            <li>Redux-saga</li>
+            <li>Styled-components</li>
+            <li>Ramda</li>
+            <li>D3</li>
+          </ul>
+          <p>
+            The map data is retrieved from <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">Natural Earth</a>, and refugee statistics are from <a href="http://popstats.unhcr.org/en/overview">UNHCR Population Statistics</a>.
+          </p>
+
+          <p>
+            This software is licensed under <a href="https://tldrlegal.com/license/mit-license">MIT-license</a>.
+          </p>
+
+          <p>
+            Feel free to throw me an email if you&apos;re interested in contributing (or have any other sort of interest in the project).
+          </p>
+
+          <p className="contact">
+            Mikko Kokkoniemi, <br />
+            {this.state.email}
+          </p>
+        </AboutContainer>
+      </Content>
+    );
+  }
 }
 
 AboutPage.propTypes = {};

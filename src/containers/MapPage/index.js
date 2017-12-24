@@ -26,6 +26,8 @@ import {
   selectCurrentCountryDetails,
   selectHoveredCountry,
   selectFilteredList,
+  selectAdditionalCountries,
+  selectTotalRefugees,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -42,7 +44,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
     this.setTooltipPosition = this.setTooltipPosition.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.init();
   }
 
@@ -67,11 +69,20 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       hoveredCountry,
       onCountryHovered,
       filteredList,
+      additionalCountries,
+      totalRefugees,
     } = this.props;
 
     return (
       <Content>
-        <Sidebar country={selectedCountry} data={currentCountryDetails} filteredList={filteredList} onCountrySelect={onCountrySelect} />
+        <Sidebar
+          country={selectedCountry}
+          data={currentCountryDetails}
+          filteredList={filteredList}
+          onCountrySelect={onCountrySelect}
+          additionalCountries={additionalCountries}
+          totalRefugees={totalRefugees}
+        />
         <Map
           dispatch={dispatch}
           initialized={initialized}
@@ -108,6 +119,8 @@ MapPage.propTypes = {
   hoveredCountry: PropTypes.object,
   onCountryHovered: PropTypes.func,
   filteredList: PropTypes.array,
+  additionalCountries: PropTypes.array,
+  totalRefugees: PropTypes.number,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line
@@ -120,6 +133,8 @@ export function mapStateToProps(state) { // eslint-disable-line
     currentCountryDetails: selectCurrentCountryDetails(state),
     hoveredCountry: selectHoveredCountry(state),
     filteredList: selectFilteredList(state),
+    additionalCountries: selectAdditionalCountries(state),
+    totalRefugees: selectTotalRefugees(state),
   };
 }
 

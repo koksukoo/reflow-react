@@ -44,6 +44,15 @@ export const selectCurrentTraffic = createSelector(
   }
 );
 
+export const selectAdditionalCountries = createSelector(
+  (state) => state,
+  (state) => {
+    let additionalCountries = selectCurrentTraffic(state);
+    additionalCountries = R.filter((obj) => !countryNames.includes(obj.country), additionalCountries);
+    return additionalCountries;
+  }
+);
+
 export const selectCountryMax = createSelector(
   selectMapDomain,
   get('countryMax'),
@@ -76,4 +85,10 @@ export const selectFilteredList = (state) => {
   const searchValue = searchFormSelector(state, 'country');
   const filteredResults = R.filter((n) => !n.search(new RegExp(searchValue, 'ig')), countryNames);
   return filteredResults;
+};
+
+export const selectTotalRefugees = (state) => {
+  const currentTraffic = selectCurrentTraffic(state);
+  const getCount = (obj) => +(obj.countAsylum || 0) + +(obj.countRefugee || 0);
+  return R.sum(R.map(getCount, currentTraffic));
 };

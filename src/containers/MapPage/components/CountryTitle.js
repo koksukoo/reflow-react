@@ -58,6 +58,17 @@ const FilteredList = styled.ul`
   li.active {
     background-color: ${({ theme }) => theme.colors.primary};
   }
+
+  li.info {
+    padding: 5px;
+    font-size: 12px;
+    user-select: none;
+    color: ${({ theme }) => theme.colors.gray};
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
 `;
 
 
@@ -97,6 +108,7 @@ class CountryTitle extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('click', (event) => {
+      if (!this.searchform) return;
       if (![...findDOMNode(this.searchform).childNodes].includes(event.target)) { // eslint-disable-line
         this.setState({ listOpen: false });
       }
@@ -110,7 +122,6 @@ class CountryTitle extends React.PureComponent {
   render() {
     const {
       title,
-      onSubmit,
       filteredList,
       onCountrySelect,
     } = this.props;
@@ -129,20 +140,23 @@ class CountryTitle extends React.PureComponent {
         case down:
           this.setState({
             candidate: this.state.candidate <= 5
+              && this.state.candidate < filteredList.length
               ? this.state.candidate + 1
               : this.state.candidate,
           });
           break;
         case enter:
           event.preventDefault();
-          onCountrySelect(filteredList[this.state.candidate]);
-          this.setState({
-            listOpen: false,
-          });
-          // a tick to let focus trigger on selected country before blur
-          setTimeout(() => {
-            [...findDOMNode(this.searchform).childNodes][0].blur(); // eslint-disable-line
-          }, 1);
+          if (filteredList[this.state.candidate]) {
+            onCountrySelect(filteredList[this.state.candidate]);
+            this.setState({
+              listOpen: false,
+            });
+            // a tick to let focus trigger on selected country before blur
+            setTimeout(() => {
+              [...findDOMNode(this.searchform).childNodes][0].blur(); // eslint-disable-line
+            }, 1);
+          }
           break;
         default:
           this.setState({
@@ -156,7 +170,6 @@ class CountryTitle extends React.PureComponent {
       <div>
         {!!title &&
         <SearchForm
-          onSubmit={onSubmit}
           toggleList={this.toggleList}
           ref={(n) => { this.searchform = n; }}
           selectCountry={selectCountry}
@@ -164,6 +177,7 @@ class CountryTitle extends React.PureComponent {
         }
         {this.state.listOpen &&
         <FilteredList>
+          {filteredList.length > 5 && <li className="info">Showing first 5 matches</li>}
           {filteredList.map((country, i) => i >= 5
             ? null
             :
@@ -182,7 +196,6 @@ class CountryTitle extends React.PureComponent {
 
 CountryTitle.propTypes = {
   title: PropTypes.string,
-  onSubmit: PropTypes.func,
   filteredList: PropTypes.array,
   onCountrySelect: PropTypes.func,
 };
