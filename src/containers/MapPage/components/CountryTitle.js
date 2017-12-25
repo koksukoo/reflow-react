@@ -80,7 +80,7 @@ let SearchForm = ({ handleSubmit, toggleList, selectCountry }) => (
       name="country"
       component="input"
       type="text"
-      onFocus={() => toggleList(true)}
+      onFocus={(event) => { toggleList(true); event.target.select(); }}
       autoComplete="off"
       onKeyDown={selectCountry}
     />

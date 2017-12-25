@@ -8,6 +8,14 @@ const StyledSidebar = styled.aside`
   padding: 20px;
   overflow: auto;
   position: relative;
+
+  @media only screen and (max-width: 992px) {
+    width: 80%;
+    position: absolute;
+    z-index: 99;
+    height: 100%;
+    display: ${({ isRevealed }) => !isRevealed && 'none'};
+  }
 `;
 
 export default StyledSidebar;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import StyledHeader from './StyledHeader';
+import MobileMenuReveal from './MobileMenuReveal';
 
 
 const H1 = styled.h1`
@@ -16,9 +17,15 @@ const H1 = styled.h1`
   }
 `;
 
-function Header({ title, children }) {
+function Header({
+  title,
+  children,
+  revealMenu,
+  isRevealed,
+}) {
   return (
     <StyledHeader>
+      <MobileMenuReveal revealMenu={revealMenu} isRevealed={isRevealed} />
       <H1><Link to="/">{ title }</Link></H1>
       { children }
     </StyledHeader>
@@ -31,6 +38,8 @@ Header.propTypes = {
     PropTypes.string,
   ]),
   children: PropTypes.node,
+  revealMenu: PropTypes.func,
+  isRevealed: PropTypes.bool,
 };
 
 export default Header;

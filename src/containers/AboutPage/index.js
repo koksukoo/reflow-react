@@ -36,7 +36,7 @@ const StyledBackLink = styled(Link)`
   float: right;
   color: ${({ theme }) => theme.colors.grayDark};
   text-decoration: none;
-  transition: background-color, color .2s ease-in-out;
+  transition: background-color .2s ease-in-out;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 5px;
   padding: 6px 12px 6px 8px;

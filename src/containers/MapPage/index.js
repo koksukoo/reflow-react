@@ -71,6 +71,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
       filteredList,
       additionalCountries,
       totalRefugees,
+      isRevealed,
     } = this.props;
 
     return (
@@ -82,6 +83,7 @@ class MapPage extends React.PureComponent { // eslint-disable-line
           onCountrySelect={onCountrySelect}
           additionalCountries={additionalCountries}
           totalRefugees={totalRefugees}
+          isRevealed={isRevealed}
         />
         <Map
           dispatch={dispatch}
@@ -121,6 +123,7 @@ MapPage.propTypes = {
   filteredList: PropTypes.array,
   additionalCountries: PropTypes.array,
   totalRefugees: PropTypes.number,
+  isRevealed: PropTypes.bool,
 };
 
 export function mapStateToProps(state) { // eslint-disable-line

@@ -14,10 +14,11 @@ class Sidebar extends React.PureComponent {
       onCountrySelect,
       additionalCountries,
       totalRefugees,
+      isRevealed,
     } = this.props;
 
     return (
-      <StyledSidebar innerRef={(n) => { this.root = n; }}>
+      <StyledSidebar innerRef={(n) => { this.root = n; }} isRevealed={isRevealed}>
         <CountryTitle
           title={country}
           filteredList={filteredList}
@@ -37,6 +38,7 @@ Sidebar.propTypes = {
   onCountrySelect: PropTypes.func,
   additionalCountries: PropTypes.array,
   totalRefugees: PropTypes.number,
+  isRevealed: PropTypes.bool,
 };
 
 export default Sidebar;
