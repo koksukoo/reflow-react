@@ -13,7 +13,8 @@ const StyledSidebar = styled.aside`
     width: 80%;
     position: absolute;
     z-index: 99;
-    height: 100%;
+    bottom: 0;
+    top: 100px;
     display: ${({ isRevealed }) => !isRevealed && 'none'};
   }
 `;

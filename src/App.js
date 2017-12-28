@@ -41,6 +41,7 @@ class App extends React.PureComponent { // eslint-disable-line
   constructor(props) {
     super(props);
 
+    // this prop is used to toggle sidebar on smaller screen sizes
     this.state = {
       sidebarRevealed: false,
     };
@@ -48,6 +49,10 @@ class App extends React.PureComponent { // eslint-disable-line
     this.closeSidebar = this.closeSidebar.bind(this);
   }
 
+  /**
+   * Todo: better approach would be to use transparent big button which triggers
+   * this.closeSidebar(). This way we could avoid findDOMNode.
+   */
   componentDidMount() {
     window.addEventListener('click', (event) => {
       const domMapPage = findDOMNode(this.mapPage); // eslint-disable-line react/no-find-dom-node
